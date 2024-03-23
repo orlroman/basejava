@@ -9,36 +9,56 @@ import java.util.Arrays;
 public class ArrayStorage {
     private final Resume[] storage = new Resume[10000];
     private int size = 0;
+    private int index;
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    public void save(Resume r) {
-        if (size < storage.length) {
-            storage[size++] = r;
+    public void update(Resume resume) {
+        if (isResume(resume.getUuid())) {
+            storage[index].setUuid(storage[index].getUuid() + " is update");
+        } else {
+            System.out.println(resume.getUuid() + " not found");
+        }
+    }
+
+    public void save(Resume resume) {
+        if (!isResume(resume.getUuid()) && size < storage.length) {
+            storage[size++] = resume;
+        } else {
+            System.out.println(resume.getUuid() + " not found");
         }
     }
 
     public Resume get(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                return storage[i];
-            }
+        if (isResume(uuid)) {
+            return storage[index];
         }
+        System.out.println(uuid + " not found");
         return null;
     }
 
     public void delete(String uuid) {
+        if (isResume(uuid)) {
+            if (size > 1 && index < size - 1) {
+                System.arraycopy(storage, index + 1, storage, index, (size - 1) - index);
+            }
+            storage[--size] = null;
+        } else {
+            System.out.println(uuid + " not found");
+        }
+    }
+
+    private boolean isResume(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
-                if (size > 1 && i < size - 1) {
-                    System.arraycopy(storage, i + 1, storage, i, (size - 1) - i);
-                }
-                storage[--size] = null;
+                index = i;
+                return true;
             }
         }
+        return false;
     }
 
     /**

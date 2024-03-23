@@ -46,7 +46,9 @@ public class MainArray {
                     printAll();
                     break;
                 case "get":
-                    System.out.println(ARRAY_STORAGE.get(uuid));
+                    if (ARRAY_STORAGE.get(uuid) != null) {
+                        System.out.println(ARRAY_STORAGE.get(uuid));
+                    }
                     break;
                 case "clear":
                     ARRAY_STORAGE.clear();
