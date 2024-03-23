@@ -28,7 +28,7 @@ public class ArrayStorage {
         if (!isResume(resume.getUuid()) && size < storage.length) {
             storage[size++] = resume;
         } else {
-            System.out.println(resume.getUuid() + " not found");
+            System.out.println(resume.getUuid() + " already exists");
         }
     }
 
