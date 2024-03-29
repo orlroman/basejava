@@ -1,6 +1,7 @@
-package com.basejava.webapp.storage;
+package com.basejava.storage;
 
-import com.basejava.webapp.model.Resume;
+import com.basejava.model.Resume;
+
 import java.util.Arrays;
 
 /**
@@ -18,11 +19,11 @@ public class ArrayStorage {
 
     public void update(Resume resume) {
         int index = findIndex(resume.getUuid());
-        if (isExist(index)) {
+        if (!isExist(index)) {
+            System.out.println(resume.getUuid() + " not found");
+        } else {
             storage[index] = resume;
             System.out.println(resume.getUuid() + " is updated");
-        } else {
-            System.out.println(resume.getUuid() + " not found");
         }
     }
 
@@ -33,26 +34,28 @@ public class ArrayStorage {
         } else if (isExist(index)) {
             System.out.println(resume.getUuid() + " already exists");
         } else {
-            storage[size++] = resume;
+            storage[size] = resume;
+            size++;
         }
     }
 
     public Resume get(String uuid) {
         int index = findIndex(uuid);
-        if (isExist(index)) {
-            return storage[index];
+        if (!isExist(index)) {
+            System.out.println(uuid + " not found");
+            return null;
         }
-        System.out.println(uuid + " not found");
-        return null;
+        return storage[index];
     }
 
     public void delete(String uuid) {
         int index = findIndex(uuid);
-        if (isExist(index)) {
-            storage[index] = storage[size - 1];
-            storage[--size] = null;
-        } else {
+        if (!isExist(index)) {
             System.out.println(uuid + " not found");
+        } else {
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
         }
     }
 
