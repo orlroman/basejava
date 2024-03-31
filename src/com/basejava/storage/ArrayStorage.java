@@ -4,10 +4,8 @@ import com.basejava.model.Resume;
 
 import java.util.Arrays;
 
-/**
- * Array based storage for Resumes
- */
-public class ArrayStorage {
+public class ArrayStorage implements Storage {
+
     private final int STORAGE_LIMIT = 10000;
     private final Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
@@ -29,7 +27,7 @@ public class ArrayStorage {
 
     public void save(Resume resume) {
         int index = findIndex(resume.getUuid());
-        if (size >= storage.length) {
+        if (size == STORAGE_LIMIT) {
             System.out.println("OVERFLOW!");
         } else if (isExist(index)) {
             System.out.println(resume.getUuid() + " already exists");
@@ -72,9 +70,6 @@ public class ArrayStorage {
         return index >= 0;
     }
 
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
