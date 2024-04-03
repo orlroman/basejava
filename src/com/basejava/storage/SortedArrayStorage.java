@@ -5,37 +5,23 @@ import com.basejava.model.Resume;
 import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
-    @Override
-    public void clear() {
 
+    @Override
+    protected void insertResume(Resume resume, int index) {
+        index = -index - 1;
+        System.arraycopy(storage, index, storage, index + 1, size - index);
+        storage[index] = resume;
     }
 
     @Override
-    public void update(Resume resume) {
-
-    }
-
-    @Override
-    public void save(Resume resume) {
-
-    }
-
-    @Override
-    public void delete(String uuid) {
-
+    protected void fillDeleteResume(int index) {
+        System.arraycopy(storage, index + 1, storage, index, (size - 1) - index);
     }
 
     @Override
     protected int findIndex(String uuid) {
         Resume searchKey = new Resume();
         searchKey.setUuid(uuid);
-        // TODO Отсортировать
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
-
-    @Override
-    public Resume[] getAll() {
-        return new Resume[0];
-    }
-
 }
