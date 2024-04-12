@@ -1,5 +1,8 @@
 package com.basejava.storage;
 
+import com.basejava.exception.ExistStorageException;
+import com.basejava.exception.NotExistStorageException;
+import com.basejava.exception.StorageException;
 import com.basejava.model.Resume;
 
 import java.util.Arrays;
@@ -30,7 +33,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public final void update(Resume resume) {
         int index = findIndex(resume.getUuid());
         if (!isExist(index)) {
-            System.out.println(resume.getUuid() + " not found");
+            throw new NotExistStorageException(resume.getUuid());
         } else {
             storage[index] = resume;
             System.out.println(resume.getUuid() + " is updated");
@@ -40,9 +43,9 @@ public abstract class AbstractArrayStorage implements Storage {
     public final void save(Resume resume) {
         int index = findIndex(resume.getUuid());
         if (size == STORAGE_LIMIT) {
-            System.out.println("OVERFLOW!");
+            throw new StorageException("OVERFLOW!", resume.getUuid());
         } else if (isExist(index)) {
-            System.out.println(resume.getUuid() + " already exists");
+            throw new ExistStorageException(resume.getUuid());
         } else {
             insertResume(resume, index);
             size++;
@@ -52,7 +55,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public final void delete(String uuid) {
         int index = findIndex(uuid);
         if (!isExist(index)) {
-            System.out.println(uuid + " not found");
+            throw new NotExistStorageException(uuid);
         } else {
             fillDeletedResume(index);
             storage[size - 1] = null;
@@ -63,8 +66,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public final Resume get(String uuid) {
         int index = findIndex(uuid);
         if (!isExist(index)) {
-            System.out.println(uuid + " not found");
-            return null;
+            throw new NotExistStorageException(uuid);
         }
         return storage[index];
     }
