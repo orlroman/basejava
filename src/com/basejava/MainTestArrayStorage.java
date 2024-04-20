@@ -36,7 +36,7 @@ public class MainTestArrayStorage {
 
         System.out.println();
         ARRAY_STORAGE.update(r5);
-        ARRAY_STORAGE.update(r1);
+      //  ARRAY_STORAGE.update(r1);
         printAll();
         ARRAY_STORAGE.clear();
         printAll();

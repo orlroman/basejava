@@ -13,16 +13,16 @@ public abstract class AbstractArrayStorage implements Storage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    public final int size() {
+    public int size() {
         return size;
     }
 
-    public final void clear() {
+    public void clear() {
         Arrays.fill(storage,0, size, null);
         size = 0;
     }
 
-    public final Resume[] getAll() {
+    public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
 
@@ -30,7 +30,7 @@ public abstract class AbstractArrayStorage implements Storage {
         return index >= 0;
     }
 
-    public final void update(Resume resume) throws NotExistStorageException {
+    public void update(Resume resume) throws NotExistStorageException {
         int index = findIndex(resume.getUuid());
         if (!isExist(index)) {
             throw new NotExistStorageException(resume.getUuid());
@@ -40,7 +40,7 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    public final void save(Resume resume) throws StorageException {
+    public void save(Resume resume) throws StorageException {
         int index = findIndex(resume.getUuid());
         if (size == STORAGE_LIMIT) {
             throw new StorageException("OVERFLOW!", resume.getUuid());
@@ -52,7 +52,7 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    public final void delete(String uuid) throws NotExistStorageException {
+    public void delete(String uuid) throws NotExistStorageException {
         int index = findIndex(uuid);
         if (!isExist(index)) {
             throw new NotExistStorageException(uuid);
@@ -63,7 +63,7 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    public final Resume get(String uuid) {
+    public Resume get(String uuid) {
         int index = findIndex(uuid);
         if (!isExist(index)) {
             throw new NotExistStorageException(uuid);
