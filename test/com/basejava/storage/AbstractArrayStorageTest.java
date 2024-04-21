@@ -60,11 +60,8 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void save() throws Exception {
-        Resume[] all = storage.getAll();
-        assertEquals(3, storage.size());
-        assertEquals(RESUME_1, all[0]);
-        assertEquals(RESUME_2, all[1]);
-        assertEquals(RESUME_3, all[2]);
+        storage.save(new Resume());
+        assertEquals(4, storage.size());
     }
 
     @Test(expected = StorageException.class)
