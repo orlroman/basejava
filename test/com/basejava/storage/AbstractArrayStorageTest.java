@@ -100,6 +100,11 @@ public abstract class AbstractArrayStorageTest {
         assertGet(RESUME_1);
     }
 
+    @Test(expected = NotExistStorageException.class)
+    public void deleteNotExist() throws Exception {
+        storage.delete(UUID_4);
+    }
+
     @Test
     public void get() throws Exception {
         assertGet(RESUME_1);
