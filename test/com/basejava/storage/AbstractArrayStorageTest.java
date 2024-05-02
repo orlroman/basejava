@@ -24,7 +24,7 @@ public abstract class AbstractArrayStorageTest {
 
     private final Storage storage;
 
-    public AbstractArrayStorageTest(Storage storage) {
+    protected AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
     }
 
