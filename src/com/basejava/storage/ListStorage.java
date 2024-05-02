@@ -2,31 +2,29 @@ package com.basejava.storage;
 
 import com.basejava.exception.ExistStorageException;
 import com.basejava.exception.NotExistStorageException;
-import com.basejava.exception.StorageException;
 import com.basejava.model.Resume;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage {
 
-    protected static final int STORAGE_LIMIT = 10000;
-    protected final Resume[] storage = new Resume[STORAGE_LIMIT];
-    protected int size = 0;
+    private final List<Resume> storageList = new ArrayList<>();
 
     @Override
     public int size() {
-        return size;
+        return storageList.size();
     }
 
     @Override
     public void clear() {
-        Arrays.fill(storage,0, size, null);
-        size = 0;
+        storageList.clear();
     }
 
     @Override
     public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
+        Resume[] resumes = new Resume[storageList.size()];
+        return storageList.toArray(resumes);
     }
 
     @Override
@@ -35,20 +33,17 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         if (!isExist(index)) {
             throw new NotExistStorageException(resume.getUuid());
         } else {
-            storage[index] = resume;
+            storageList.add(index, resume);
         }
     }
 
     @Override
-    public void save(Resume resume) throws StorageException {
+    public void save(Resume resume) throws ExistStorageException {
         int index = findIndex(resume.getUuid());
         if (isExist(index)) {
             throw new ExistStorageException(resume.getUuid());
-        } else if (size == STORAGE_LIMIT) {
-            throw new StorageException("OVERFLOW!", resume.getUuid());
         } else {
-            insertResume(resume, index);
-            size++;
+            storageList.add(resume);
         }
     }
 
@@ -58,9 +53,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         if (!isExist(index)) {
             throw new NotExistStorageException(uuid);
         } else {
-            fillDeletedResume(index);
-            storage[size - 1] = null;
-            size--;
+            storageList.remove(index);
         }
     }
 
@@ -70,10 +63,19 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         if (!isExist(index)) {
             throw new NotExistStorageException(uuid);
         }
-        return storage[index];
+        return storageList.get(index);
     }
 
-    abstract void insertResume(Resume resume, int index);
-    abstract void fillDeletedResume(int index);
+    @Override
+    protected int findIndex(String uuid) {
+        for (Resume resume : storageList) {
+            if (resume.getUuid().equals(uuid)) {
+                return storageList.indexOf(resume);
+            }
+        }
+        return -1;
+    }
+
+
 
 }

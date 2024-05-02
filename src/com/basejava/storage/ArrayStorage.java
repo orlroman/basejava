@@ -4,6 +4,7 @@ import com.basejava.model.Resume;
 
 public class ArrayStorage extends AbstractArrayStorage {
 
+    @Override
     protected void insertResume(Resume resume, int index) {
         storage[size] = resume;
     }
