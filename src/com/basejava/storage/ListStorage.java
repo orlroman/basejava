@@ -1,7 +1,5 @@
 package com.basejava.storage;
 
-import com.basejava.exception.ExistStorageException;
-import com.basejava.exception.NotExistStorageException;
 import com.basejava.model.Resume;
 
 import java.util.ArrayList;
@@ -12,57 +10,38 @@ public class ListStorage extends AbstractStorage {
     private final List<Resume> storageList = new ArrayList<>();
 
     @Override
-    public int size() {
+    public int storageSize() {
         return storageList.size();
     }
 
     @Override
-    public void clear() {
+    public void clearStorage() {
         storageList.clear();
     }
 
     @Override
-    public Resume[] getAll() {
+    public Resume[] getAllResumes() {
         Resume[] resumes = new Resume[storageList.size()];
         return storageList.toArray(resumes);
     }
 
     @Override
-    public void update(Resume resume) throws NotExistStorageException {
-        int index = findIndex(resume.getUuid());
-        if (!isExist(index)) {
-            throw new NotExistStorageException(resume.getUuid());
-        } else {
-            storageList.add(index, resume);
-        }
+    public void updateResume(Resume resume, int index) {
+        storageList.add(index, resume);
     }
 
     @Override
-    public void save(Resume resume) throws ExistStorageException {
-        int index = findIndex(resume.getUuid());
-        if (isExist(index)) {
-            throw new ExistStorageException(resume.getUuid());
-        } else {
-            storageList.add(resume);
-        }
+    public void saveResume(Resume resume, int index) {
+        storageList.add(resume);
     }
 
     @Override
-    public void delete(String uuid) throws NotExistStorageException {
-        int index = findIndex(uuid);
-        if (!isExist(index)) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            storageList.remove(index);
-        }
+    public void deleteResume(int index) {
+        storageList.remove(index);
     }
 
     @Override
-    public Resume get(String uuid) throws NotExistStorageException {
-        int index = findIndex(uuid);
-        if (!isExist(index)) {
-            throw new NotExistStorageException(uuid);
-        }
+    public Resume getResume(int index) {
         return storageList.get(index);
     }
 
@@ -75,7 +54,6 @@ public class ListStorage extends AbstractStorage {
         }
         return -1;
     }
-
 
 
 }
