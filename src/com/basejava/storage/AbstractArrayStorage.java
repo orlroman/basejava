@@ -26,30 +26,33 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public void updateResume(Resume resume, int index) {
+    public void updateResume(Object searchKey, Resume resume) {
+        int index = (Integer) searchKey;
         storage[index] = resume;
     }
 
     @Override
-    public void saveResume(Resume resume, int index) {
+    public void saveResume(Object searchKey, Resume resume) {
+        int index = (Integer) searchKey;
         insertResume(resume, index);
         size++;
     }
 
     @Override
-    public void deleteResume(int index) {
+    public void deleteResume(Object searchKey) {
+        int index = (Integer) searchKey;
         fillDeletedResume(index);
         storage[size - 1] = null;
         size--;
     }
 
     @Override
-    public Resume getResume(int index) {
+    public Resume getResume(Object searchKey) {
+        int index = (Integer) searchKey;
         return storage[index];
     }
 
     abstract void insertResume(Resume resume, int index);
 
     abstract void fillDeletedResume(int index);
-
 }

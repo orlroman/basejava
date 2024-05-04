@@ -7,53 +7,53 @@ import java.util.List;
 
 public class ListStorage extends AbstractStorage {
 
-    private final List<Resume> storageList = new ArrayList<>();
+    private final List<Resume> storage = new ArrayList<>();
 
     @Override
-    public int storageSize() {
-        return storageList.size();
+    protected int storageSize() {
+        return storage.size();
     }
 
     @Override
-    public void clearStorage() {
-        storageList.clear();
+    protected void clearStorage() {
+        storage.clear();
     }
 
     @Override
-    public Resume[] getAllResumes() {
-        Resume[] resumes = new Resume[storageList.size()];
-        return storageList.toArray(resumes);
+    protected Resume[] getAllResumes() {
+        return storage.toArray(new Resume[0]);
     }
 
     @Override
-    public void updateResume(Resume resume, int index) {
-        storageList.add(index, resume);
+    protected void updateResume(Object searchKey, Resume resume) {
+        int index = (Integer) searchKey;
+        storage.set(index, resume);
     }
 
     @Override
-    public void saveResume(Resume resume, int index) {
-        storageList.add(resume);
+    protected void saveResume(Object searchKey, Resume resume) {
+        storage.add(resume);
     }
 
     @Override
-    public void deleteResume(int index) {
-        storageList.remove(index);
+    protected void deleteResume(Object searchKey) {
+        int index = (Integer) searchKey;
+        storage.remove(index);
     }
 
     @Override
-    public Resume getResume(int index) {
-        return storageList.get(index);
+    protected Resume getResume(Object searchKey) {
+        int index = (Integer) searchKey;
+        return storage.get(index);
     }
 
     @Override
     protected int findIndex(String uuid) {
-        for (Resume resume : storageList) {
-            if (resume.getUuid().equals(uuid)) {
-                return storageList.indexOf(resume);
+        for (int i = 0; i < storage.size(); i++) {
+            if (storage.get(i).getUuid().equals(uuid)) {
+                return i;
             }
         }
         return -1;
     }
-
-
 }

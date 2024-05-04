@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class ListStorageTest {
+public class MapStorageTest {
 
     private static final String UUID_1 = "uuid1";
     private static final Resume RESUME_1 = new Resume(UUID_1);
@@ -22,7 +22,7 @@ public class ListStorageTest {
     private static final String UUID_4 = "uuid4";
     private static final Resume RESUME_4 = new Resume(UUID_4);
 
-    private final Storage storage = new ListStorage();
+    private final Storage storage = new MapStorage();
 
     @Before
     public void setUp() throws Exception {

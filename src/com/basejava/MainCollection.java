@@ -39,5 +39,26 @@ public class MainCollection {
 
         System.out.println(collection);
 
+        Map<String, Integer> map = new HashMap<>();
+        map.put("apple", 10);
+        map.put("banana", 20);
+        map.put("orange", 30);
+
+        Integer valueToCompare = 10;
+        int i = 0;
+
+        // Проходим по записям в Map
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            // Сравниваем значение из записи с заданным значением
+            if (Objects.equals(entry.getValue(), valueToCompare)) {
+                // Если значения равны, возвращаем счетчик i
+                System.out.println("Key with value " + valueToCompare + " found at index: " + i);
+                return;
+            }
+            i++;
+        }
+        int size = map.size();
+        System.out.println(size);
+
     }
 }

@@ -26,43 +26,47 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public void update(Resume resume) {
-        int index = findIndex(resume.getUuid());
-        if (!isExist(index)) {
-            throw new NotExistStorageException(resume.getUuid());
-        } else {
-            updateResume(resume, index);
-        }
+        Object searchKey = getNotExistingSearchKey(resume.getUuid());
+        updateResume(searchKey, resume);
     }
 
     @Override
     public void save(Resume resume) {
-        int index = findIndex(resume.getUuid());
-        if (isExist(index)) {
-            throw new ExistStorageException(resume.getUuid());
-        } else if (size() == STORAGE_LIMIT) {
-            throw new StorageException("OVERFLOW!", resume.getUuid());
-        } else {
-            saveResume(resume, index);
-        }
+        Object searchKey = getExistingSearchKey(resume.getUuid());
+        saveResume(searchKey, resume);
     }
 
     @Override
     public void delete(String uuid) {
-        int index = findIndex(uuid);
-        if (!isExist(index)) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            deleteResume(index);
-        }
+        Object searchKey = getNotExistingSearchKey(uuid);
+        deleteResume(searchKey);
     }
 
     @Override
     public Resume get(String uuid) {
-        int index = findIndex(uuid);
+        Object searchKey = getNotExistingSearchKey(uuid);
+        return getResume(searchKey);
+    }
+
+    private Object getNotExistingSearchKey(String uuid) {
+        Object searchKey = findIndex(uuid);
+        int index = (Integer) searchKey;
         if (!isExist(index)) {
             throw new NotExistStorageException(uuid);
         }
-        return getResume(index);
+        return searchKey;
+    }
+
+    private Object getExistingSearchKey(String uuid) {
+        Object searchKey = findIndex(uuid);
+        int index = (Integer) searchKey;
+        if (isExist(index)) {
+            throw new ExistStorageException(uuid);
+        } else if (size() == STORAGE_LIMIT) {
+            throw new StorageException("OVERFLOW!", uuid);
+        } else {
+            return searchKey;
+        }
     }
 
     abstract int findIndex(String uuid);
@@ -73,11 +77,11 @@ public abstract class AbstractStorage implements Storage {
 
     abstract Resume[] getAllResumes();
 
-    abstract Resume getResume(int index);
+    abstract Resume getResume(Object searchKey);
 
-    abstract void updateResume(Resume resume, int index);
+    abstract void updateResume(Object searchKey, Resume resume);
 
-    abstract void saveResume(Resume resume, int index);
+    abstract void saveResume(Object searchKey, Resume resume);
 
-    abstract void deleteResume(int index);
+    abstract void deleteResume(Object searchKey);
 }
