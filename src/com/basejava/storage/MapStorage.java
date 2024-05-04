@@ -19,6 +19,7 @@ public class MapStorage extends AbstractStorage {
     @Override
     protected void clearStorage() {
         storage.clear();
+        key = 0;
     }
 
     @Override
