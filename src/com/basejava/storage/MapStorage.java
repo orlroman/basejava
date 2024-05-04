@@ -9,6 +9,7 @@ import java.util.Objects;
 public class MapStorage extends AbstractStorage {
 
     private final Map<Object, Resume> storage = new HashMap();
+    private int key = 0;
 
     @Override
     protected int storageSize() {
@@ -32,7 +33,8 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected void saveResume(Object searchKey, Resume resume) {
-        storage.put(searchKey, resume);
+        storage.put(key, resume);
+        key++;
     }
 
     @Override
@@ -55,12 +57,5 @@ public class MapStorage extends AbstractStorage {
             }
         }
         return -1;
-
-        //    for (int i = 0; i <= storage.size(); i++) {
-        //    if (storage.get(i).getUuid().equals(uuid)) {
-        //        return i;
-        //    }
-      //  }
-       // return -1;
     }
 }

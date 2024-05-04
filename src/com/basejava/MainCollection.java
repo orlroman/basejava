@@ -44,21 +44,15 @@ public class MainCollection {
         map.put("banana", 20);
         map.put("orange", 30);
 
-        Integer valueToCompare = 10;
-        int i = 0;
 
-        // Проходим по записям в Map
+        System.out.println(map.size());
+
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            // Сравниваем значение из записи с заданным значением
-            if (Objects.equals(entry.getValue(), valueToCompare)) {
-                // Если значения равны, возвращаем счетчик i
-                System.out.println("Key with value " + valueToCompare + " found at index: " + i);
-                return;
+            if (Objects.equals(entry.getValue(), 20)) {
+                // Если значения равны, возвращаем ключ
+                System.out.println(entry.getKey());
             }
-            i++;
         }
-        int size = map.size();
-        System.out.println(size);
 
     }
 }
