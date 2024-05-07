@@ -2,18 +2,20 @@ package com.basejava.storage;
 
 import com.basejava.model.Resume;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class MapStorage extends AbstractStorage {
 
-    private final Map<Object, Resume> storage = new HashMap<>();
-    private int key = 0;
+    private final Map<String, Resume> storage = new HashMap<>();
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return (Integer) searchKey >= 0;
+        for (Map.Entry<String, Resume> entry : storage.entrySet()) {
+            if (Objects.equals(entry.getValue().getUuid(), findSearchKey((String)searchKey))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -24,23 +26,30 @@ public class MapStorage extends AbstractStorage {
     @Override
     protected void clearStorage() {
         storage.clear();
-        key = 0;
     }
 
     @Override
     protected Resume[] getAllResumes() {
-        return storage.values().toArray(new Resume[0]);
+//        return storage.values().toArray(new Resume[0]);
+
+        // Преобразование значений Map в список и сортировка по значениям Resume
+        List<Map.Entry<String, Resume>> sortedEntries = new ArrayList<>(storage.entrySet());
+        sortedEntries.sort(Map.Entry.comparingByKey());
+
+        // Преобразование отсортированного списка в массив
+        return sortedEntries.stream()
+                .map(Map.Entry::getValue)
+                .toArray(Resume[]::new);
     }
 
     @Override
     protected void updateResume(Object searchKey, Resume resume) {
-        storage.put(searchKey, resume);
+        storage.put((String) searchKey, resume);
     }
 
     @Override
     protected void saveResume(Object searchKey, Resume resume) {
-        storage.put(key, resume);
-        key++;
+        storage.put((String) searchKey, resume);
     }
 
     @Override
@@ -54,14 +63,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected int findSearchKey(String uuid) {
-
-        for (Map.Entry<Object, Resume> entry : storage.entrySet()) {
-            if (Objects.equals(entry.getValue().getUuid(), uuid)) {
-                // Если значения равны, возвращаем ключ
-                return (Integer) entry.getKey();
-            }
-        }
-        return -1;
+    protected Object findSearchKey(String uuid) {
+        return uuid;
     }
 }

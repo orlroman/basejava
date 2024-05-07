@@ -60,7 +60,7 @@ public abstract class AbstractStorage implements Storage {
 
     abstract boolean isExist(Object searchKey);
 
-    abstract int findSearchKey(String uuid);
+    abstract Object findSearchKey(String uuid);
 
     abstract int storageSize();
 
