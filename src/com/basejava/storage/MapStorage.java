@@ -8,8 +8,13 @@ import java.util.Objects;
 
 public class MapStorage extends AbstractStorage {
 
-    private final Map<Object, Resume> storage = new HashMap();
+    private final Map<Object, Resume> storage = new HashMap<>();
     private int key = 0;
+
+    @Override
+    protected boolean isExist(Object searchKey) {
+        return (Integer) searchKey >= 0;
+    }
 
     @Override
     protected int storageSize() {
@@ -49,7 +54,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected int findIndex(String uuid) {
+    protected int findSearchKey(String uuid) {
 
         for (Map.Entry<Object, Resume> entry : storage.entrySet()) {
             if (Objects.equals(entry.getValue().getUuid(), uuid)) {
