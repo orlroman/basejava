@@ -15,17 +15,17 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected int storageSize() {
+    public int size() {
         return storage.size();
     }
 
     @Override
-    protected void clearStorage() {
+    public void clear() {
         storage.clear();
     }
 
     @Override
-    protected Resume[] getAllResumes() {
+    public Resume[] getAll() {
         return storage.toArray(new Resume[0]);
     }
 

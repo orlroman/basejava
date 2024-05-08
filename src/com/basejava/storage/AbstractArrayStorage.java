@@ -12,18 +12,18 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected int size = 0;
 
     @Override
-    public int storageSize() {
+    public int size() {
         return size;
     }
 
     @Override
-    public void clearStorage() {
+    public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
     @Override
-    public Resume[] getAllResumes() {
+    public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
 

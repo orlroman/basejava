@@ -10,33 +10,23 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected boolean isExist(Object searchKey) {
-        for (Map.Entry<String, Resume> entry : storage.entrySet()) {
-            if (Objects.equals(entry.getValue().getUuid(), findSearchKey((String)searchKey))) {
-                return true;
-            }
-        }
-        return false;
+        return storage.containsKey(searchKey);
     }
 
     @Override
-    protected int storageSize() {
+    public int size() {
         return storage.size();
     }
 
     @Override
-    protected void clearStorage() {
+    public void clear() {
         storage.clear();
     }
 
     @Override
-    protected Resume[] getAllResumes() {
-//        return storage.values().toArray(new Resume[0]);
-
-        // Преобразование значений Map в список и сортировка по значениям Resume
+    public Resume[] getAll() {
         List<Map.Entry<String, Resume>> sortedEntries = new ArrayList<>(storage.entrySet());
         sortedEntries.sort(Map.Entry.comparingByKey());
-
-        // Преобразование отсортированного списка в массив
         return sortedEntries.stream()
                 .map(Map.Entry::getValue)
                 .toArray(Resume[]::new);

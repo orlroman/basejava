@@ -6,17 +6,6 @@ import com.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    public int size() {
-        return storageSize();
-    }
-
-    public void clear() {
-        clearStorage();
-    }
-
-    public Resume[] getAll() {
-        return getAllResumes();
-    }
 
     public void update(Resume resume) {
         Object searchKey = getNotExistingSearchKey(resume.getUuid());
@@ -61,12 +50,6 @@ public abstract class AbstractStorage implements Storage {
     abstract boolean isExist(Object searchKey);
 
     abstract Object findSearchKey(String uuid);
-
-    abstract int storageSize();
-
-    abstract void clearStorage();
-
-    abstract Resume[] getAllResumes();
 
     abstract Resume getResume(Object searchKey);
 
