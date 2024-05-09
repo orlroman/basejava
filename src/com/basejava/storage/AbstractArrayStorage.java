@@ -37,10 +37,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public void saveResume(Object searchKey, Resume resume) {
         if (size() == STORAGE_LIMIT) {
             throw new StorageException("OVERFLOW!", resume.getUuid());
+        } else {
+            int index = (Integer) searchKey;
+            insertResume(resume, index);
+            size++;
         }
-        int index = (Integer) searchKey;
-        insertResume(resume, index);
-        size++;
     }
 
     @Override
