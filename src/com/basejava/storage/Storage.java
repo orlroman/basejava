@@ -2,13 +2,15 @@ package com.basejava.storage;
 
 import com.basejava.model.Resume;
 
+import java.util.List;
+
 public interface Storage {
 
     int size();
 
     void clear();
 
-    Resume[] getAll();
+    List<Resume> getAllSorted();
 
     void update(Resume resume);
 

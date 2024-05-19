@@ -1,9 +1,7 @@
 package com.basejava.storage;
 
-public class SortedStorageTest extends AbstractStorageTest {
-
+public class SortedStorageTest extends AbstractArrayStorageTest {
     public SortedStorageTest() {
         super(new SortedArrayStorage());
     }
-
 }
