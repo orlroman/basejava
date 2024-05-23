@@ -8,11 +8,8 @@ import static org.junit.Assert.fail;
 
 public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
 
-    private final Storage storage;
-
     protected AbstractArrayStorageTest(Storage storage) {
         super(storage);
-        this.storage = storage;
     }
 
     @Test(expected = StorageException.class)
@@ -20,11 +17,11 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
         storage.clear();
         try {
             for (int i = 0; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
-                storage.save(new Resume("Roman"));
+                storage.save(new Resume("Roman" + i));
             }
         } catch (StorageException e) {
             fail("Early overflow");
         }
-        storage.save(new Resume("Roman"));
+        storage.save(new Resume("Overflow"));
     }
 }
