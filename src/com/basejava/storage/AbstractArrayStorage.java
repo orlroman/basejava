@@ -6,7 +6,7 @@ import com.basejava.model.Resume;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     protected static final int STORAGE_LIMIT = 10000;
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -29,39 +29,35 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public void updateResume(Object searchKey, Resume resume) {
-        int index = (Integer) searchKey;
-        storage[index] = resume;
+    public void updateResume(Integer searchKey, Resume resume) {
+        storage[searchKey] = resume;
     }
 
     @Override
-    public void saveResume(Object searchKey, Resume resume) {
+    public void saveResume(Integer searchKey, Resume resume) {
         if (size() == STORAGE_LIMIT) {
             throw new StorageException("OVERFLOW!", resume.getUuid());
         } else {
-            int index = (Integer) searchKey;
-            insertResume(resume, index);
+            insertResume(resume, searchKey);
             size++;
         }
     }
 
     @Override
-    public void deleteResume(Object searchKey) {
-        int index = (Integer) searchKey;
-        fillDeletedResume(index);
+    public void deleteResume(Integer searchKey) {
+        fillDeletedResume(searchKey);
         storage[size - 1] = null;
         size--;
     }
 
     @Override
-    public Resume getResume(Object searchKey) {
-        int index = (Integer) searchKey;
-        return storage[index];
+    public Resume getResume(Integer searchKey) {
+        return storage[searchKey];
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
-        return (Integer) searchKey >= 0;
+    protected boolean isExist(Integer searchKey) {
+        return searchKey >= 0;
     }
 
     abstract void insertResume(Resume resume, int index);
