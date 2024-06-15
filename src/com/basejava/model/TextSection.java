@@ -1,9 +1,12 @@
 package com.basejava.model;
 
+import java.util.Objects;
+
 public class TextSection extends Section {
     private final String content;
 
     public TextSection(String content) {
+        Objects.requireNonNull(content, "content cannot be null");
         this.content = content;
     }
 

@@ -1,11 +1,13 @@
 package com.basejava.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CompanySection extends Section {
     private final List<Company> company;
 
     public CompanySection(List<Company> company) {
+        Objects.requireNonNull(company, "company cannot be null");
         this.company = company;
     }
 

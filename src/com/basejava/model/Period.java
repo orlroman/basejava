@@ -1,6 +1,7 @@
 package com.basejava.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Period {
     private final LocalDate startDate;
@@ -9,6 +10,9 @@ public class Period {
     private final String description;
 
     public Period(LocalDate startDate, LocalDate endDate, String title, String description) {
+        Objects.requireNonNull(startDate, "start date cannot be null");
+        Objects.requireNonNull(endDate, "end date cannot be null");
+        Objects.requireNonNull(title, "title cannot be null");
         this.startDate = startDate;
         this.endDate = endDate;
         this.title = title;
@@ -41,7 +45,7 @@ public class Period {
         if (!startDate.equals(period.startDate)) return false;
         if (!endDate.equals(period.endDate)) return false;
         if (!title.equals(period.title)) return false;
-        return description.equals(period.description);
+        return Objects.equals(description, period.description);
     }
 
     @Override
@@ -49,18 +53,17 @@ public class Period {
         int result = startDate.hashCode();
         result = 31 * result + endDate.hashCode();
         result = 31 * result + title.hashCode();
-        result = 31 * result + description.hashCode();
+        result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return startDate + " - " + endDate + "\n" + title + "\n" + description;
-//        return "Period{" +
-//                "startDate=" + startDate +
-//                ", endDate=" + endDate +
-//                ", title='" + title + '\'' +
-//                ", description='" + description + '\'' +
-//                '}';
+        return "Period{" +
+                "startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

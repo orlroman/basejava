@@ -1,16 +1,18 @@
 package com.basejava.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ListSection extends Section {
-    private final List<String> content;
+    private final List<String> items;
 
-    public ListSection(List<String> content) {
-        this.content = content;
+    public ListSection(List<String> items) {
+        Objects.requireNonNull(items, "items cannot be null");
+        this.items = items;
     }
 
-    public List<String> getContent() {
-        return content;
+    public List<String> getItems() {
+        return items;
     }
 
     @Override
@@ -20,16 +22,16 @@ public class ListSection extends Section {
 
         ListSection that = (ListSection) o;
 
-        return content.equals(that.content);
+        return items.equals(that.items);
     }
 
     @Override
     public int hashCode() {
-        return content.hashCode();
+        return items.hashCode();
     }
 
     @Override
     public String toString() {
-        return content.toString();
+        return items.toString();
     }
 }
