@@ -3,12 +3,12 @@ package com.basejava.model;
 import java.util.List;
 import java.util.Objects;
 
-public class Company {
+public class Organization {
     private final String name;
     private final String website;
     private final List<Period> periods;
 
-    public Company(String name, String website, List<Period> periods) {
+    public Organization(String name, String website, List<Period> periods) {
         Objects.requireNonNull(name, "company name cannot be null");
         Objects.requireNonNull(periods, "periods cannot be null");
         this.name = name;
@@ -33,11 +33,11 @@ public class Company {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Company company = (Company) o;
+        Organization organization = (Organization) o;
 
-        if (!name.equals(company.name)) return false;
-        if (!Objects.equals(website, company.website)) return false;
-        return periods.equals(company.periods);
+        if (!name.equals(organization.name)) return false;
+        if (!Objects.equals(website, organization.website)) return false;
+        return periods.equals(organization.periods);
     }
 
     @Override

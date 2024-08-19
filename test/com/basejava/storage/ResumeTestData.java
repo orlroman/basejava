@@ -68,23 +68,16 @@ public class ResumeTestData {
                 "Создание, организация и проведение Java онлайн проектов и стажировок.");
         List<Period> listExpPeriod = new ArrayList<>();
         listExpPeriod.add(expPeriod);
-        Company company = new Company("Java Online Projects", "https://javaops.ru/", listExpPeriod);
-        System.out.println(SectionType.EXPERIENCE.getTitle() + "\n" + company + "\n");
+        Organization organization = new Organization("Java Online Projects", "https://javaops.ru/", listExpPeriod);
+        System.out.println(SectionType.EXPERIENCE.getTitle() + "\n" + organization + "\n");
 
         Period eduPeriod = new Period(LocalDate.of(2013, 3, 3),
                 LocalDate.of(2013, 5, 3), "",
                 "'Functional Programming Principles in Scala' by Martin Odersky.");
         List<Period> listEduPeriod = new ArrayList<>();
         listEduPeriod.add(eduPeriod);
-        Company education = new Company("Coursera", "coursera.com", listEduPeriod);
+        Organization education = new Organization("Coursera", "coursera.com", listEduPeriod);
         System.out.println(SectionType.EDUCATION.getTitle() + "\n" + education + "\n");
-
-
-
-
-
-
-
 
     }
 }
